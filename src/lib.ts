@@ -1,1 +1,1 @@
-export const helloWolrd = "2";
+export { default as Editor } from "./App";
