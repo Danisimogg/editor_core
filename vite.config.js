@@ -31,12 +31,7 @@ export default defineConfig({
     },
   },
   build: {
-    lib: {
-      entry: path.resolve(__dirname, "src/lib.ts"),
-      fileName: "main",
-      formats: ["es", "cjs"],
-    },
-    outDir: "build",
+    outDir: "dist",
     rollupOptions: {
       input: {
         main: new URL("./index.html", import.meta.url).pathname,
