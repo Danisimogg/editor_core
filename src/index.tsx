@@ -1,5 +1,7 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Header } from "./components/Header/Header";
 import App from "./App";
 
 import "./setupEnv";
@@ -25,6 +27,14 @@ window.addEventListener("unhandledrejection", ({ reason }) =>
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <>
+        <Header />
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/editor" element={<div> test </div>} />
+        </Routes>
+      </>
+    </BrowserRouter>
   </React.StrictMode>
 );
