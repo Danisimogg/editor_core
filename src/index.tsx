@@ -1,6 +1,7 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EditorPage from "./pages/EditorPage/EditorPage";
 import { Header } from "./components/Header/Header";
 import App from "./App";
 
@@ -32,7 +33,7 @@ createRoot(document.getElementById("root") as HTMLElement).render(
         <Header />
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/editor" element={<div> test </div>} />
+          <Route path="/editor" element={<EditorPage />} />
         </Routes>
       </>
     </BrowserRouter>

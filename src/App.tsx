@@ -1,10 +1,27 @@
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+
 import { $createLinkNode } from "@lexical/link";
 import { $createListItemNode, $createListNode } from "@lexical/list";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
 import * as React from "react";
-import { Button } from "@/components/ui/button";
 import { isDevPlayground } from "./appSettings";
 import { SettingsContext, useSettings } from "./context/SettingsContext";
 import { SharedAutocompleteContext } from "./context/SharedAutocompleteContext";
@@ -18,6 +35,7 @@ import TestRecorderPlugin from "./plugins/TestRecorderPlugin";
 import TypingPerfPlugin from "./plugins/TypingPerfPlugin";
 import Settings from "./Settings";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
+import EditorPage from "./pages/EditorPage/EditorPage";
 
 console.warn(
   "If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting."
@@ -109,12 +127,12 @@ function App() {
   } = useSettings();
 
   const initialConfig = {
-    editable: !true,
-    // editorState: isCollab
-    //   ? null
-    //   : emptyEditor
-    //   ? undefined
-    //   : localStorage.getItem("draft") || prepopulatedRichText,
+    editable: true,
+    editorState: isCollab
+      ? null
+      : emptyEditor
+      ? undefined
+      : localStorage.getItem("draft") || prepopulatedRichText,
     namespace: "Playground",
     nodes: [...PlaygroundNodes],
     onError: (error: Error) => {
@@ -129,10 +147,88 @@ function App() {
         <SharedHistoryContext>
           <TableContext>
             <SharedAutocompleteContext>
-              <div style={{ padding: " 40px" }}>
+              <div
+                style={{
+                  padding: " 40px",
+                  background: "#f4f4f5",
+                  height: "100%",
+                }}
+              >
                 <div className="prose max-w-none mt-5">
                   <div className="editor-shell">
-                    <Editor />
+                    <Tabs defaultValue="account">
+                      <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="account">Text Mode</TabsTrigger>
+                        <TabsTrigger value="password">Design Mode</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="account">
+                        <ContextMenu>
+                          <ContextMenuTrigger>
+                            <Editor />
+                          </ContextMenuTrigger>
+
+                          <ContextMenuContent className="w-64">
+                            <ContextMenuItem inset>
+                              Back
+                              <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+                            </ContextMenuItem>
+                            <ContextMenuItem inset disabled>
+                              Forward
+                              <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                            </ContextMenuItem>
+                            <ContextMenuItem inset>
+                              Reload
+                              <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+                            </ContextMenuItem>
+                            <ContextMenuSub>
+                              <ContextMenuSubTrigger inset>
+                                More Tools
+                              </ContextMenuSubTrigger>
+                              <ContextMenuSubContent className="w-48">
+                                <ContextMenuItem>
+                                  Save Page As...
+                                  <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut>
+                                </ContextMenuItem>
+                                <ContextMenuItem>
+                                  Create Shortcut...
+                                </ContextMenuItem>
+                                <ContextMenuItem>
+                                  Name Window...
+                                </ContextMenuItem>
+                                <ContextMenuSeparator />
+                                <ContextMenuItem>
+                                  Developer Tools
+                                </ContextMenuItem>
+                              </ContextMenuSubContent>
+                            </ContextMenuSub>
+                            <ContextMenuSeparator />
+                            <ContextMenuCheckboxItem checked>
+                              Show Bookmarks Bar
+                              <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>
+                            </ContextMenuCheckboxItem>
+                            <ContextMenuCheckboxItem>
+                              Show Full URLs
+                            </ContextMenuCheckboxItem>
+                            <ContextMenuSeparator />
+                            <ContextMenuRadioGroup value="pedro">
+                              <ContextMenuLabel inset>People</ContextMenuLabel>
+                              <ContextMenuSeparator />
+                              <ContextMenuRadioItem value="pedro">
+                                Pedro Duarte
+                              </ContextMenuRadioItem>
+                              <ContextMenuRadioItem value="colm">
+                                Colm Tuite
+                              </ContextMenuRadioItem>
+                            </ContextMenuRadioGroup>
+                          </ContextMenuContent>
+                        </ContextMenu>
+                      </TabsContent>
+                      <TabsContent value="password">
+                        <div>
+                          <EditorPage />
+                        </div>
+                      </TabsContent>
+                    </Tabs>
                   </div>
                 </div>
                 {/* <Settings /> */}

@@ -89,7 +89,9 @@ export const Header: FC = () => (
               />
 
               <p className="ms-2 hidden text-left text-xs sm:block">
-                <strong className="block font-medium">Eric Frusciante</strong>
+                <strong className="block font-medium">
+                  Николай Авторитенко
+                </strong>
 
                 <span className="text-gray-500"> eric@frusciante.com </span>
               </p>

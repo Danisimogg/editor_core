@@ -59,7 +59,6 @@ import YouTubePlugin from "./plugins/YouTubePlugin";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 import ContentEditable from "./ui/ContentEditable";
 import Placeholder from "./ui/Placeholder";
-
 const skipCollaborationInit =
   // @ts-ignore
   window.parent != null && window.parent.frames.right === window;
@@ -142,7 +141,7 @@ export default function Editor() {
 
   return (
     <>
-      {isRichText && <ToolbarPlugin />}
+      {/* {isRichText && <ToolbarPlugin />} */}
       <div
         className={`editor-container ${showTreeView ? "tree-view" : ""} ${
           !isRichText ? "plain-text" : ""
